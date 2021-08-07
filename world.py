@@ -6,6 +6,7 @@ class World:
     def __init__(self):
         self._world = {}
         self.starting_position = [0, 0]
+        self.entities = []
 
         # Parses a file that describes the world space into the _world object
         with open('resources/map.txt', 'r') as f:

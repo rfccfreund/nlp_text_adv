@@ -1,3 +1,14 @@
+from __future__ import annotations
+
+import copy
+from typing import Tuple, TypeVar, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from world import World
+
+T = TypeVar("T", bound="Entity")
+
+
 class Entity:
     """
     A generic object to represent players, enemies, items, etc
@@ -15,12 +26,11 @@ class Entity:
         self.y = y
         self.name = name
 
-    def spawn(self: T, gamemap: GameMap, x: int, y: int) -> T:
+    def spawn(self: T, x: int, y: int) -> T:
         """Spawn a copy of this instance at the given location."""
         clone = copy.deepcopy(self)
         clone.x = x
         clone.y = y
-        gamemap.entities.add(clone)
         return clone
 
     def move(self, dx: int, dy: int) -> None:

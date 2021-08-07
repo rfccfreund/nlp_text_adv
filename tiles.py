@@ -1,8 +1,10 @@
-from adventuretutorial import enemies, items, action, world
+from adventuretutorial import entity_maker, items, action
+from adventuretutorial.entity_maker import GiantSpider
 
 
 class MapTile:
     def __init__(self, x, y):
+        self.enemies = []
         self.x = x
         self.y = y
 
@@ -50,28 +52,32 @@ class EnemyRoom(MapTile):
     def intro_text(self):
         pass
 
-    def __init__(self, x, y, enemy):
-        self.enemy = enemy
+    def __init__(self, x, y):
         super().__init__(x, y)
 
+    def spawn_enemy(self, enemy):
+        self.enemies.append(enemy.spawn(self.x, self.y))
+
     def modify_player(self, player):
-        if self.enemy.is_alive():
-            player.hp = player.hp - self.enemy.damage
-            print("Enemy does {} damage. You have {} HP remaining.".format(self.enemy.damge, player.hp))
+        raise NotImplementedError()
 
     def available_actions(self):
-        if self.enemy.is_alive():
-            return [action.Flee(tile=self), action.Attack(enemy=self.enemy)]
+        """Returns all of the available actions in this room"""
+        if self.enemies:
+            for i in self.enemies:
+                moves = [action.Attack(i)]
         else:
-            return [action.ViewInventory()]
+            moves = []
 
+        return moves
 
 
 class EmptyCavePath(MapTile):
     def intro_text(self):
-        return """
-        Another unremarkable part of the cave. You must forge onwards
+        print(
         """
+        Another unremarkable part of the cave. You must forge onwards
+        """)
 
     def modify_player(self, player):
         # Room has no action on player
@@ -83,18 +89,18 @@ class GiantSpiderRoom(EnemyRoom):
         pass
 
     def __init__(self, x, y):
-        super().__init__(x, y, enemies.GiantSpider())
+        super().__init__(x, y)
+        self.spawn_enemy(GiantSpider)
 
     def intro_text(self):
-        if self.enemy.is_alive():
-            return """
+        if self.enemies:
+            print("""
             A giant spider jump down from its web in front of you
-            """
-
+            """)
         else:
-            return """
-            The corpse of a dead spider rots on the ground
-            """
+            print("""
+            The corpse of a large spider lays in front of you
+            """)
 
 
 class FindDaggerRoom(LootRoom):
@@ -102,20 +108,20 @@ class FindDaggerRoom(LootRoom):
         super().__init__(x, y, items.Dagger())
 
     def intro_text(self):
-        return """
+        print("""
         You notice something shiny in the corner.
         It's a dagger! You pick it up
-        """
+        """)
 
 
 class LeaveCaveRoom(MapTile):
     def intro_text(self):
-        return """
+        print("""
         You see a bright light in the distance...
         ... it grows as you get closer! It's sunlight!
 
         Victory is yours!
-        """
+        """)
 
     def modify_player(self, player):
         player.victory = True

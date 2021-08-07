@@ -1,5 +1,6 @@
-from adventuretutorial.enemies import Enemy
-from player import Player
+from adventuretutorial.entity_maker import Enemy, Player
+
+from entity_maker import Player
 
 
 class Action:
