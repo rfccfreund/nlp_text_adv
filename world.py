@@ -1,5 +1,4 @@
 from adventuretutorial import action
-from tiles import MapTile
 
 
 class World:
@@ -15,7 +14,7 @@ class World:
         for y in range(len(rows)):
             cols = rows[y].split(',')
             for x in range(x_max):
-                tile_name = cols[x].replace('\n', '')  # Windows users may need to replace '\r\n
+                tile_name = cols[x].replace('\n', '')
                 if tile_name == 'StartingRoom':
                     self.starting_position = [x, y]
                 self._world[(x, y)] = None if tile_name == '' else getattr(__import__('tiles'), tile_name)(x, y)

@@ -1,10 +1,12 @@
 from adventuretutorial import entity_maker, items, action
+from adventuretutorial.action import Attack, ViewInventory
 from adventuretutorial.entity_maker import GiantSpider
 
 
 class MapTile:
     def __init__(self, x, y):
         self.enemies = []
+        self.explored = False
         self.x = x
         self.y = y
 
@@ -16,7 +18,7 @@ class MapTile:
 
     def available_actions(self):
         """Returns all of the available actions in this room"""
-        moves = [action.ViewInventory()]
+        moves = [ViewInventory()]
 
         return moves
 
@@ -59,13 +61,19 @@ class EnemyRoom(MapTile):
         self.enemies.append(enemy.spawn(self.x, self.y))
 
     def modify_player(self, player):
-        raise NotImplementedError()
+        if self.enemies:
+            total_damage = 0
+            for i in self.enemies:
+                player.hp -= i.damage
+                total_damage += i.damage
+
+            print(f"You lost {total_damage} health. You have {player.hp} health remaining")
 
     def available_actions(self):
         """Returns all of the available actions in this room"""
         if self.enemies:
             for i in self.enemies:
-                moves = [action.Attack(i)]
+                moves = [Attack(i)]
         else:
             moves = []
 
@@ -74,8 +82,7 @@ class EnemyRoom(MapTile):
 
 class EmptyCavePath(MapTile):
     def intro_text(self):
-        print(
-        """
+        print("""
         Another unremarkable part of the cave. You must forge onwards
         """)
 
@@ -85,17 +92,19 @@ class EmptyCavePath(MapTile):
 
 
 class GiantSpiderRoom(EnemyRoom):
-    def modify_player(self, player):
-        pass
-
     def __init__(self, x, y):
         super().__init__(x, y)
         self.spawn_enemy(GiantSpider)
 
     def intro_text(self):
-        if self.enemies:
+        if self.enemies and self.explored is False:
+            self.explored = True
             print("""
             A giant spider jump down from its web in front of you
+            """)
+        elif self.enemies:
+            print("""
+            The spider bares its fangs and lunges towards you
             """)
         else:
             print("""

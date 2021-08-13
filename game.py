@@ -1,13 +1,25 @@
-from adventuretutorial.engine import Engine
-from adventuretutorial.entity_maker import Player
-from adventuretutorial.world import World
+from engine import Engine
+import world
+import entity
 
 
 def play():
-    world = World()
-    player = Player(name="Hero", hp=100)
+    """
+    A world object parses a csv to create a dict which
+    stores tiles. World also stores the generic movement actions to navigate
+    the dict
+    """
+    _world = world.World()
+    """
+    A player object is a subclass of a entity which differs by having an inventory
+    """
+    player = entity.Player(name="Hero", hp=100)
 
-    engine = Engine(world, player)
+    """
+    engine object contains the majority of the game logic and take a player object 
+    and a world object
+    """
+    engine = Engine(_world, player)
 
     engine.set_up()
     engine.begin()
