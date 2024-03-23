@@ -1,0 +1,4 @@
+EmptyCavePath, EmptyCavePath, EmptyCavePath, StartingRoom
+EmptyCavePath, EmptyCavePath, EmptyCavePath, EmptyCavePath
+
+
