@@ -1,4 +1,5 @@
-from adventuretutorial import action
+import action
+import os
 
 
 class World:
@@ -8,9 +9,10 @@ class World:
         self.entities = []
 
         # Parses a file that describes the world space into the _world object
+        os.chdir('..')
         with open('resources/map.txt', 'r') as f:
             rows = f.readlines()
-        x_max = len(rows[0].split(','))  # Assumes all rows contain the same number of tabs
+        x_max = len(rows[0].split(','))  # Assumes all rows contain the same number of commas
         for y in range(len(rows)):
             cols = rows[y].split(',')
             for x in range(x_max):
