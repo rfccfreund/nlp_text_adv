@@ -1,6 +1,6 @@
-from adventuretutorial import entity_maker, items, action
-from adventuretutorial.action import Attack, ViewInventory
-from adventuretutorial.entity_maker import GiantSpider
+import items
+from action import Attack, ViewInventory
+from entity_maker import GiantSpider
 
 
 class MapTile:

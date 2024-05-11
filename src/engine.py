@@ -1,11 +1,9 @@
 from entity import Player
-from adventuretutorial.world import World
-from rich import print
-from rich.layout import Layout
+import world
 
 
 class Engine:
-    def __init__(self, world: World, player: Player):
+    def __init__(self, world: world, player: Player):
         self.world = world
         self.player = player
 

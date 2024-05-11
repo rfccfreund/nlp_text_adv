@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import copy
 from typing import Tuple, TypeVar, TYPE_CHECKING
-from adventuretutorial import items
+import items
 
 if TYPE_CHECKING:
     from world import World

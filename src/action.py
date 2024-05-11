@@ -1,6 +1,5 @@
 from typing import TYPE_CHECKING
-
-from adventuretutorial import items
+import items
 from entity import Entity, Player, Enemy
 
 if TYPE_CHECKING:
