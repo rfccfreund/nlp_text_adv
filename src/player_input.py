@@ -7,12 +7,9 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LogisticRegression
 
-nltk.download('all')
 
 os.chdir('..')
 data = pd.read_csv('resources/training.csv')
-
-print(data.head())
 
 sentences = data['text']
 y = data['label']

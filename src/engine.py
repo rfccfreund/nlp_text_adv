@@ -27,7 +27,6 @@ class Engine:
             room.modify_player(self.player)
             # Logic generates a list of actions the player can choose from
             if self.player.is_alive() and not self.player.victory:
-                print("Choose an action:\n")
                 # Prevents movement actions if an enemy is in the room
                 if not room.enemies:
                     available_actions = self.world.adjacent_moves(room)
@@ -36,8 +35,10 @@ class Engine:
                 # modifies available actions for a player based on a rooms properties
                 available_actions += room.available_actions()
 
-                for action in available_actions:
-                    print(action)
+                directions = ""
+                for x in self.world.adjacent_moves(room):
+                    directions += ' ' + str(x)
+                print("Available paths: " + directions)
                 print('What would you like to do next?')
                 line = [input()]
                 player_choice = player_input.vectorizer.transform(line)
