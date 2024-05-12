@@ -21,7 +21,7 @@ class Action:
         raise NotImplementedError()
 
     def __str__(self):
-        return f'{self.hotkey}: {self.name}'
+        return f'{self.hotkey}'
 
 
 class MovementAction(Action):
