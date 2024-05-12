@@ -1,4 +1,4 @@
-EmptyCavePath,EmptyCavePath,EmptyCavePath,StartingRoom,
+EmptyCavePath,EmptyCavePath,BanditRoom,StartingRoom,
 EmptyCavePath,EmptyCavePath,FindDaggerRoom,EmptyCavePath,
 EmptyCavePath,EmptyCavePath,GiantSpiderRoom,EmptyCavePath,
 EmptyCavePath,GiantSpiderRoom,EmptyCavePath,LeaveCaveRoom,

@@ -1,6 +1,6 @@
 import items
 from action import Attack, ViewInventory
-from entity_maker import GiantSpider
+from entity_maker import *
 
 
 class MapTile:
@@ -112,6 +112,48 @@ class GiantSpiderRoom(EnemyRoom):
             """)
 
 
+class BanditRoom(EnemyRoom):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.spawn_enemy(Bandit)
+
+    def intro_text(self):
+        if self.enemies and self.explored is False:
+            self.explored = True
+            print("""
+            A bandit leaps from behind a rock and attacks you
+            """)
+        elif self.enemies:
+            print("""
+            the bandit tries to close the distance and stab you with a short sword
+            """)
+        else:
+            print("""
+            The bandit lays dead in a pool of his own blood
+                        """)
+
+
+class OgreRoom(EnemyRoom):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.spawn_enemy(Ogre)
+
+    def intro_text(self):
+        if self.enemies and self.explored is False:
+            self.explored = True
+            print("""
+            You walk right into the sight line of an ogre. It raises it club to strike
+            """)
+        elif self.enemies:
+            print("""
+            You hear the cracking of bones as the tip of the club catches you while dodging
+            """)
+        else:
+            print("""
+            The mighty ogre is slain by your hand. If only someone was around to see it
+                        """)
+
+
 class FindDaggerRoom(LootRoom):
     def __init__(self, x, y):
         super().__init__(x, y, items.Dagger())
@@ -121,6 +163,9 @@ class FindDaggerRoom(LootRoom):
         You notice something shiny in the corner.
         It's a dagger! You pick it up
         """)
+
+
+# class GuardTreasureRoom(LootRoom, EnemyRoom):
 
 
 class LeaveCaveRoom(MapTile):

@@ -39,3 +39,11 @@ class Dagger(Weapon):
                          description="A small dagger with some rust. Somewhat more dangerous than a rock",
                          value=10,
                          damage=10)
+
+
+class Sword(Weapon):
+    def __init__(self):
+        super().__init__(name="Short Sword",
+                         description="A short sword made of quality iron. A weapons favored by bandits",
+                         value=20,
+                         damage=17)
