@@ -1,5 +1,6 @@
 from entity import Player
 import world
+import player_input
 
 
 class Engine:
@@ -37,7 +38,11 @@ class Engine:
 
                 for action in available_actions:
                     print(action)
-                action_input = input('Action: ')
+                print('What would you like to do next?')
+                line = [input()]
+                player_choice = player_input.vectorizer.transform(line)
+                action_input = player_input.classifier.predict(player_choice)
+                action_input = action_input[0][0]
                 for action in available_actions:
                     if action_input == action.hotkey:
                         self.player.do_action(action)
