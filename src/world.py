@@ -33,5 +33,9 @@ class World:
             moves.append(action.MoveNorth())
         return moves
 
+    def flee_move(self, tile):
+        var = [action.Flee(self.adjacent_moves(tile))]
+        return var
+
     def tile_exists(self, x, y):
         return self._world.get((x, y))

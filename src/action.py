@@ -1,6 +1,8 @@
 from typing import TYPE_CHECKING
+import random
 import items
 from entity import Entity, Player, Enemy
+
 
 if TYPE_CHECKING:
     from entity import Entity
@@ -26,6 +28,7 @@ class Action:
 
 class MovementAction(Action):
     """Action subclass that dictates entity movement"""
+
     def __init__(self, dx: int, dy: int):
         super().__init__(name='Movement', hotkey='None')
 
@@ -98,6 +101,22 @@ class Attack(Action):
             print(f"{self.enemy.name} HP is {self.enemy.hp}.")
 
 
+class Flee(MovementAction):
+    def __init__(self, routes):
+        super().__init__(dx=0, dy=0)
+        self.name = 'Flee'
+        self.hotkey = 'f'
+
+        # looks at available moves to prevent fleeing into a non-existent tile
+        self.route_chosen = random.choice(routes)
+
+    def perform(self, entity: Entity) -> None:
+        self.route_chosen.perform(entity)
 
 
+class Interact(Action):
+    def __init__(self):
+        super().__init__(name='Interact', hotkey='i')
 
+    def perform(self, entity: Entity) -> None:
+        return None

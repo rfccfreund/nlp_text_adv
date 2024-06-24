@@ -34,6 +34,7 @@ class Engine:
                     available_actions = []
                 # modifies available actions for a player based on a rooms properties
                 available_actions += room.available_actions()
+                available_actions += self.world.flee_move(room)
 
                 directions = ""
                 for x in self.world.adjacent_moves(room):
