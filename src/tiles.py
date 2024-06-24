@@ -1,6 +1,7 @@
 import items
-from action import Attack, ViewInventory
+from action import Attack, ViewInventory, Flee
 from entity_maker import *
+
 
 
 class MapTile:
@@ -74,6 +75,7 @@ class EnemyRoom(MapTile):
         if self.enemies:
             for i in self.enemies:
                 moves = [Attack(i)]
+
         else:
             moves = []
 
