@@ -17,11 +17,19 @@ class MapTile:
     def modify_player(self, player):
         raise NotImplementedError()
 
+    def is_explored(self):
+        return self.explored
+
+    def explored(self):
+        self.explored = True
+
     def available_actions(self):
         """Returns all of the available actions in this room"""
         moves = [ViewInventory()]
 
         return moves
+
+
 
 
 class StartingRoom(MapTile):
@@ -69,6 +77,8 @@ class EnemyRoom(MapTile):
                 total_damage += i.damage
 
             print(f"You lost {total_damage} health. You have {player.hp} health remaining")
+        else:
+            self.
 
     def available_actions(self):
         """Returns all of the available actions in this room"""

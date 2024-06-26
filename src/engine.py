@@ -17,6 +17,8 @@ class Engine:
     def begin(self):
         while self.player.is_alive() and not self.player.victory:
             room = self.world.tile_exists(self.player.x, self.player.y)
+            if not room.is_explored():
+                room.explored()
             # Moves through all the enemies in a room and removes dead ones
             for i in room.enemies:
                 if not i.is_alive():
