@@ -23,11 +23,11 @@ class World:
     def adjacent_moves(self, tile):
         """Returns all move actions for adjacent tiles."""
         moves = []
-        if self.tile_exists(tile.x + 1, tile.y):
+        if self.tile_exists(tile.x + 1, tile.y) and self.tile_exists(tile.x + 1, tile.y).is_navigable():
             moves.append(action.MoveEast())
-        if self.tile_exists(tile.x - 1, tile.y):
+        if self.tile_exists(tile.x - 1, tile.y) and self.tile_exists(tile.x - 1, tile.y).is_navigable():
             moves.append(action.MoveWest())
-        if self.tile_exists(tile.x, tile.y + 1):
+        if self.tile_exists(tile.x, tile.y + 1) and self.tile_exists(tile.x, tile.y + 1).is_navigable():
             moves.append(action.MoveSouth())
         if self.tile_exists(tile.x, tile.y - 1):
             moves.append(action.MoveNorth())
