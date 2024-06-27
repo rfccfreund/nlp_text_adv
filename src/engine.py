@@ -17,14 +17,17 @@ class Engine:
     def begin(self):
         while self.player.is_alive() and not self.player.victory:
             room = self.world.tile_exists(self.player.x, self.player.y)
+            room.intro_text()
             if not room.is_explored():
                 room.explored()
+            else:
+                room.explore_text()
             # Moves through all the enemies in a room and removes dead ones
             for i in room.enemies:
                 if not i.is_alive():
                     room.enemies.remove(i)
             # Prints room intro text
-            room.intro_text()
+
             # Check again since the room could have changed the player's state
             room.modify_player(self.player)
             # Logic generates a list of actions the player can choose from

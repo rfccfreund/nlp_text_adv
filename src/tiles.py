@@ -1,5 +1,5 @@
 import items
-from action import Attack, ViewInventory, Flee
+from action import Attack, ViewInventory, Flee, Interact
 from entity_maker import *
 
 
@@ -8,10 +8,14 @@ class MapTile:
     def __init__(self, x, y):
         self.enemies = []
         self.explored = False
+        self.interacted = False
         self.x = x
         self.y = y
 
     def intro_text(self):
+        raise NotImplementedError()
+
+    def explore_text(self):
         raise NotImplementedError()
 
     def modify_player(self, player):
@@ -23,9 +27,15 @@ class MapTile:
     def explored(self):
         self.explored = True
 
+    def is_interacted(self):
+        return self.interacted
+
     def available_actions(self):
         """Returns all of the available actions in this room"""
         moves = [ViewInventory()]
+
+        if not self.is_interacted():
+            moves.append(Interact())
 
         return moves
 
@@ -39,6 +49,10 @@ class StartingRoom(MapTile):
         You can make out four paths, each equally as dark and foreboding.
         """
 
+    def explore_text(self):
+        return """
+        You remember this room. This is where you started.        
+        """
     def modify_player(self, player):
         # Room has no action on player
         pass
@@ -61,6 +75,9 @@ class LootRoom(MapTile):
 
 class EnemyRoom(MapTile):
     def intro_text(self):
+        pass
+
+    def explore_text(self):
         pass
 
     def __init__(self, x, y):
@@ -98,6 +115,9 @@ class EmptyCavePath(MapTile):
         Another unremarkable part of the cave. You must forge onwards
         """)
 
+    def explore_text(self):
+        pass
+
     def modify_player(self, player):
         # Room has no action on player
         pass
@@ -110,7 +130,6 @@ class GiantSpiderRoom(EnemyRoom):
 
     def intro_text(self):
         if self.enemies and self.explored is False:
-            self.explored = True
             print("""
             A giant spider jump down from its web in front of you
             """)
@@ -123,6 +142,9 @@ class GiantSpiderRoom(EnemyRoom):
             The corpse of a large spider lays in front of you
             """)
 
+    def explore_text(self):
+        pass
+
 
 class BanditRoom(EnemyRoom):
     def __init__(self, x, y):
@@ -131,7 +153,6 @@ class BanditRoom(EnemyRoom):
 
     def intro_text(self):
         if self.enemies and self.explored is False:
-            self.explored = True
             print("""
             A bandit leaps from behind a rock and attacks you
             """)
@@ -144,6 +165,8 @@ class BanditRoom(EnemyRoom):
             The bandit lays dead in a pool of his own blood
                         """)
 
+    def explore_text(self):
+        pass
 
 class OgreRoom(EnemyRoom):
     def __init__(self, x, y):
@@ -152,7 +175,6 @@ class OgreRoom(EnemyRoom):
 
     def intro_text(self):
         if self.enemies and self.explored is False:
-            self.explored = True
             print("""
             You walk right into the sight line of an ogre. It raises it club to strike
             """)
@@ -164,7 +186,8 @@ class OgreRoom(EnemyRoom):
             print("""
             The mighty ogre is slain by your hand. If only someone was around to see it
                         """)
-
+    def explore_text(self):
+        pass
 
 class FindDaggerRoom(LootRoom):
     def __init__(self, x, y):
@@ -176,7 +199,8 @@ class FindDaggerRoom(LootRoom):
         It's a dagger! You pick it up
         """)
 
-
+    def explore_text(self):
+        pass
 # class GuardTreasureRoom(LootRoom, EnemyRoom):
 
 
@@ -188,6 +212,9 @@ class LeaveCaveRoom(MapTile):
 
         Victory is yours!
         """)
+
+    def explore_text(self):
+        pass
 
     def modify_player(self, player):
         player.victory = True
