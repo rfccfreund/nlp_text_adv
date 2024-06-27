@@ -12,14 +12,14 @@ class Engine:
         self.player.set_location(self.world.starting_position)
         # These lines load the starting room and display the text
         room = self.world.tile_exists(self.player.x, self.player.y)
-        print(room.intro_text())
+
 
     def begin(self):
         while self.player.is_alive() and not self.player.victory:
             room = self.world.tile_exists(self.player.x, self.player.y)
-            room.intro_text()
             if not room.is_explored():
-                room.explored()
+                room.intro_text()
+                room.explore_room()
             else:
                 room.explore_text()
             # Moves through all the enemies in a room and removes dead ones

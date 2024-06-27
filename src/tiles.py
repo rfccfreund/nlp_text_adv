@@ -3,12 +3,12 @@ from action import Attack, ViewInventory, Flee, Interact
 from entity_maker import *
 
 
-
 class MapTile:
     def __init__(self, x, y):
         self.enemies = []
         self.explored = False
         self.interacted = False
+        self.navigable = True
         self.x = x
         self.y = y
 
@@ -24,11 +24,14 @@ class MapTile:
     def is_explored(self):
         return self.explored
 
-    def explored(self):
+    def explore_room(self):
         self.explored = True
 
     def is_interacted(self):
         return self.interacted
+
+    def is_navigable(self):
+        return self.navigable
 
     def available_actions(self):
         """Returns all of the available actions in this room"""
@@ -40,19 +43,18 @@ class MapTile:
         return moves
 
 
-
-
 class StartingRoom(MapTile):
     def intro_text(self):
-        return """
+        print("""
         You find yourself if a cave with a flickering torch on the wall.
         You can make out four paths, each equally as dark and foreboding.
-        """
+        """)
 
     def explore_text(self):
-        return """
+        print("""
         You remember this room. This is where you started.        
-        """
+        """)
+
     def modify_player(self, player):
         # Room has no action on player
         pass
@@ -70,18 +72,19 @@ class LootRoom(MapTile):
         player.inventory.append(self.item)
 
     def modify_player(self, player):
-        self.add_loot(player)
+        if self.interacted:
+            self.add_loot(player)
 
 
 class EnemyRoom(MapTile):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+
     def intro_text(self):
         pass
 
     def explore_text(self):
         pass
-
-    def __init__(self, x, y):
-        super().__init__(x, y)
 
     def spawn_enemy(self, enemy):
         self.enemies.append(enemy.spawn(self.x, self.y))
@@ -94,8 +97,6 @@ class EnemyRoom(MapTile):
                 total_damage += i.damage
 
             print(f"You lost {total_damage} health. You have {player.hp} health remaining")
-        else:
-            self.
 
     def available_actions(self):
         """Returns all of the available actions in this room"""
@@ -168,6 +169,7 @@ class BanditRoom(EnemyRoom):
     def explore_text(self):
         pass
 
+
 class OgreRoom(EnemyRoom):
     def __init__(self, x, y):
         super().__init__(x, y)
@@ -186,8 +188,10 @@ class OgreRoom(EnemyRoom):
             print("""
             The mighty ogre is slain by your hand. If only someone was around to see it
                         """)
+
     def explore_text(self):
         pass
+
 
 class FindDaggerRoom(LootRoom):
     def __init__(self, x, y):
@@ -201,6 +205,24 @@ class FindDaggerRoom(LootRoom):
 
     def explore_text(self):
         pass
+
+
+class BlockedPassage(MapTile):
+    def __init__(self, x, y):
+        super().__init__(x, y)
+        self.navigable = False
+
+    def intro_text(self):
+        pass
+
+    def explore_text(self):
+        pass
+
+    def modify_player(self, player):
+        # Room has no action on player
+        pass
+
+
 # class GuardTreasureRoom(LootRoom, EnemyRoom):
 
 
