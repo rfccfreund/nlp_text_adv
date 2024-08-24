@@ -47,7 +47,7 @@ class StartingRoom(MapTile):
     def intro_text(self):
         print("""
         You find yourself if a cave with a flickering torch on the wall.
-        You can make out four paths, each equally as dark and foreboding.
+        You can make out several paths, each equally dark and foreboding.
         """)
 
     def explore_text(self):
@@ -113,7 +113,7 @@ class EnemyRoom(MapTile):
 class EmptyCavePath(MapTile):
     def intro_text(self):
         print("""
-        Another unremarkable part of the cave. You must forge onwards
+        Another unremarkable part of the cave. You must forge onwards to find the exit
         """)
 
     def explore_text(self):
@@ -240,3 +240,16 @@ class LeaveCaveRoom(MapTile):
 
     def modify_player(self, player):
         player.victory = True
+
+
+class StairsUp(MapTile):
+    def intro_text(self):
+        print("""
+        Rough stairs headed upwards are carved into the stone
+        """)
+
+    def explore_text(self):
+        pass
+
+    def modify_player(self, player):
+        pass

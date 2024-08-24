@@ -10,6 +10,7 @@ def play():
     the dict
     """
     _world = world.World()
+
     """
     A player object is a subclass of a entity which differs by having an inventory
     """
